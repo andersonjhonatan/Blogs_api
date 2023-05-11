@@ -37,9 +37,29 @@ const getUserController = async (req, res) => {
   const { authorization } = req.headers;
 
   if (authorization) {
-    const result = await userService.getAllUser();
+    const result = await userService.getAllUsers();
     res.status(200).json(result);
   }
 };
 
-module.exports = { userController, createUserController, getUserController };
+const getByIdController = async (req, res) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+
+  const result = await userService.getById(id);
+
+  if (result.status === 404) {
+    return res.status(404).json({ message: result.message });
+  }
+  
+  if (authorization) {
+    res.status(200).json(result);
+  }
+};
+
+module.exports = {
+  userController,
+  createUserController,
+  getUserController,
+  getByIdController,
+};
