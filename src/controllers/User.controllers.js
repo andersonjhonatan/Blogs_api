@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
 const userService = require('../service/UserService');
+const { createToken } = require('../auth/authFunction');
 
 const userController = async (req, res) => {
   const { email, password } = req.body;
@@ -14,11 +14,7 @@ const userController = async (req, res) => {
     return res.status(400).json({ message: 'Invalid fields' });
   }
 
-  const payload = { email: user.email };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '15m',
-    algorithm: 'HS256',
-  });
+  const token = createToken(email);
 
   res.status(200).json({ token });
 };
@@ -32,13 +28,18 @@ const createUserController = async (req, res) => {
     return res.status(409).json({ message: result.message });
   }
 
-  const payload = { email };
-  const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: '15m',
-    algorithm: 'HS256',
-  });
+  const token = createToken(email);
 
   res.status(201).json({ token });
 };
 
-module.exports = { userController, createUserController };
+const getUserController = async (req, res) => {
+  const { authorization } = req.headers;
+
+  if (authorization) {
+    const result = await userService.getAllUser();
+    res.status(200).json(result);
+  }
+};
+
+module.exports = { userController, createUserController, getUserController };
