@@ -1,21 +1,25 @@
 const UserModel = (sequelize, DataTypes) => {
-  const user = sequelize.define('User',
+  const User = sequelize.define(
+    'User',
     {
-      id: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       displayName: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       image: DataTypes.STRING,
     },
     {
-      tablename: 'user',
-      timesStamps: false,
-      underscored: true
+      tableName: 'users',
+      timestamps: false,
+      underscored: true,
     }
   );
 
-  return user;
+  return User;
 };
-
 
 module.exports = UserModel;
