@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = require('./routes/User.routes');
+const categoriesRouter = require('./routes/Category.routes');
 
 // ...
 
@@ -12,6 +13,7 @@ app.get('/', (_request, response) => {
 
 app.use(express.json());
 app.use(userRouter);
+app.use(categoriesRouter);
 
 // ...
 
