@@ -10,4 +10,6 @@ const postCategories = (name) => {
   return result;
 };
 
-module.exports = { postCategories };
+const getAllCategories = () => Category.findAll();
+
+module.exports = { postCategories, getAllCategories };

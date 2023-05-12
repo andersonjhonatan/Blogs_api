@@ -12,4 +12,13 @@ const createCategory = async (req, res) => {
   return res.status(201).json(result);
 };
 
-module.exports = { createCategory };
+const getAllCategories = async (req, res) => {
+  const { authorization } = req.headers;
+
+  if (authorization) {
+    const result = await categoryModel.getAllCategories();
+    return res.status(200).json(result);
+  }
+};
+
+module.exports = { createCategory, getAllCategories };
