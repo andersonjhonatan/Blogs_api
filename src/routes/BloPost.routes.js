@@ -16,5 +16,10 @@ BlogPostRouter.get(
   authenticateToken,
   blogModelController.getAllPost,
 );
+BlogPostRouter.get(
+  '/post/:id',
+  authenticateToken,
+  blogModelController.getByIdPostController,
+);
 
 module.exports = BlogPostRouter;

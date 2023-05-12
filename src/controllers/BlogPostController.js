@@ -22,4 +22,14 @@ const getAllPost = async (req, res) => {
   if (authorization) return res.status(200).json(result);
 };
 
-module.exports = { createPostController, getAllPost };
+const getByIdPostController = async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+  const result = await BlogPostModel.getByIdPost(id);
+
+  if (result.status === 404) return res.status(404).json({ message: result.message });
+
+  if (authorization) return res.status(200).json(result);
+};
+
+module.exports = { createPostController, getAllPost, getByIdPostController };
