@@ -11,5 +11,10 @@ BlogPostRouter.post(
   validateBlogPost,
   blogModelController.createPostController,
 );
+BlogPostRouter.get(
+  '/post',
+  authenticateToken,
+  blogModelController.getAllPost,
+);
 
 module.exports = BlogPostRouter;

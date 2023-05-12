@@ -14,4 +14,12 @@ const createPostController = async (req, res) => {
   if (authorization) return res.status(201).json(result);
 };
 
-module.exports = { createPostController };
+const getAllPost = async (req, res) => {
+  const { authorization } = req.headers;
+
+  const result = await BlogPostModel.getAllPost();
+
+  if (authorization) return res.status(200).json(result);
+};
+
+module.exports = { createPostController, getAllPost };
