@@ -32,4 +32,17 @@ const getByIdPostController = async (req, res) => {
   if (authorization) return res.status(200).json(result);
 };
 
-module.exports = { createPostController, getAllPost, getByIdPostController };
+const putPostController = async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+  const { title, content } = req.body;
+  const userId = 1;
+
+  const result = await BlogPostModel.alterPostById(id, title, content, userId);
+
+  if (result.status === 401) return res.status(401).json({ message: result.message });
+
+  if (authorization) return res.status(200).json(result);
+};
+
+module.exports = { createPostController, getAllPost, getByIdPostController, putPostController };

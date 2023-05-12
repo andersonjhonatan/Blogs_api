@@ -8,4 +8,15 @@ const validateBlogPost = (req, res, next) => {
   next();
 };
 
-module.exports = validateBlogPost;
+const validatePutPost = (req, res, next) => {
+  const { title, content } = req.body;
+  const { id } = req.params;
+
+  if (!id || !title || !content) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+
+  next();
+};
+
+module.exports = { validateBlogPost, validatePutPost };
