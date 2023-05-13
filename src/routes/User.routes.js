@@ -9,5 +9,6 @@ userRouter.post('/login', userControll.userController);
 userRouter.post('/user', validatesUser, userControll.createUserController);
 userRouter.get('/user', authenticateToken, userControll.getUserController);
 userRouter.get('/user/:id', authenticateToken, userControll.getByIdController);
+userRouter.delete('/user/me', authenticateToken, userControll.deleteUser);
 
 module.exports = userRouter;

@@ -51,10 +51,16 @@ const getByIdController = async (req, res) => {
   if (result.status === 404) {
     return res.status(404).json({ message: result.message });
   }
-  
+
   if (authorization) {
     res.status(200).json(result);
   }
+};
+
+const deleteUser = async (req, res) => {
+  const { authorization } = req.headers;
+  await userService.deleteUser();
+  if (authorization) return res.status(204).end();
 };
 
 module.exports = {
@@ -62,4 +68,5 @@ module.exports = {
   createUserController,
   getUserController,
   getByIdController,
+  deleteUser,
 };

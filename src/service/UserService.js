@@ -36,4 +36,6 @@ const getById = async (id) => {
   return user;
 };
 
-module.exports = { postLogin, createUser, getAllUsers, getById };
+const deleteUser = async () => User.findByPk();
+  
+module.exports = { postLogin, createUser, getAllUsers, getById, deleteUser };
