@@ -92,4 +92,22 @@ if (existingUserId === null) return { status: 401, message: 'Unauthorized user' 
   return user;
 };
 
-module.exports = { createPost, getAllPost, getByIdPost, alterPostById };
+const deletePostById = async (id) => {
+  const existingPost = await BlogPost.findByPk(id);
+  
+    if (!existingPost) return { status: 404, message: 'Post does not exist' };
+  
+  const existingUserId = await User.findByPk(id);
+
+    if (!existingUserId) return { status: 401, message: 'Unauthorized user' };
+
+      await existingPost.destroy({
+        where: {
+          id,
+        },
+      });
+  
+  return { status: 204 };
+};
+
+module.exports = { createPost, getAllPost, getByIdPost, alterPostById, deletePostById };

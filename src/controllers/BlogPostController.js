@@ -45,4 +45,24 @@ const putPostController = async (req, res) => {
   if (authorization) return res.status(200).json(result);
 };
 
-module.exports = { createPostController, getAllPost, getByIdPostController, putPostController };
+const deletePostIds = async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+  const result = await BlogPostModel.deletePostById(id);
+
+  if (result.status === 404 || result.status === 401) {
+    return res.status(result.status).json({ message: result.message });
+  }
+
+  if (authorization) {
+    return res.status(result.status).end();
+  }
+};
+
+module.exports = {
+  createPostController,
+  getAllPost,
+  getByIdPostController,
+  putPostController,
+  deletePostIds,
+};
