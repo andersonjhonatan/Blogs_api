@@ -110,4 +110,32 @@ const deletePostById = async (id) => {
   return { status: 204 };
 };
 
-module.exports = { createPost, getAllPost, getByIdPost, alterPostById, deletePostById };
+const getSearchTermAndBlog = async (q) => {
+  const searchTerm = await BlogPost.findAll({
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${q}%` } },
+        { content: { [Op.like]: `%${q}%` } },
+      ],
+    },
+    include: [
+      { model: User, 
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+      { model: Category, as: 'categories' },
+    ],
+    attributes: { exclude: ['user_id'] },
+  });
+
+  return searchTerm;
+};
+
+module.exports = { 
+  createPost,
+  getAllPost,
+  getByIdPost,
+  alterPostById,
+  deletePostById,
+  getSearchTermAndBlog,
+};

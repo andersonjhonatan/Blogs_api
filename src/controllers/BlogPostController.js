@@ -59,10 +59,22 @@ const deletePostIds = async (req, res) => {
   }
 };
 
+const getSearchTermController = async (req, res) => {
+  const { authorization } = req.headers;
+  const { q } = req.query;
+
+  const result = await BlogPostModel.getSearchTermAndBlog(q);
+
+  if (authorization) {
+    return res.status(200).json(result);
+  }
+};
+
 module.exports = {
   createPostController,
   getAllPost,
   getByIdPostController,
   putPostController,
   deletePostIds,
+  getSearchTermController,
 };

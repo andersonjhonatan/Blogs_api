@@ -5,6 +5,12 @@ const { validateBlogPost, validatePutPost } = require('../middlewares/BlogMiddle
 
 const BlogPostRouter = express.Router();
 
+BlogPostRouter.get(
+  '/post/search',
+  authenticateToken,
+  blogModelController.getSearchTermController,
+);
+
 BlogPostRouter.post(
   '/post',
   authenticateToken,
